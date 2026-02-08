@@ -1,0 +1,42 @@
+/* MFC Global Theme */
+:root {
+    --mfc-orange: #FF9400;
+    --mfc-purple: #9059FF;
+    --dark-bg: #0B0E14;
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+body {
+    background-color: var(--dark-bg);
+    color: #e2e8f0; /* slate-200 */
+    font-family: 'Inter', sans-serif;
+}
+
+.mfc-gradient-bg { 
+    background: linear-gradient(135deg, var(--mfc-orange) 0%, var(--mfc-purple) 100%); 
+}
+
+.mfc-gradient-text {
+    background: linear-gradient(90deg, var(--mfc-orange), var(--mfc-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+    border-color: var(--mfc-orange);
+    transform: translateY(-2px);
+}
+
+.nav-link-active {
+    color: var(--mfc-orange) !important;
+    border-bottom: 2px solid var(--mfc-orange);
+    padding-bottom: 4px;
+}
