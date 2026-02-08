@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MFC | Event Registration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .mfc-orange { color: #FF9400; }
+        .mfc-bg-gradient { background: linear-gradient(135deg, #FF9400 0%, #9059FF 100%); }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+    </style>
+</head>
+<body class="bg-[#0B0E14] text-slate-200 min-h-screen font-sans">
+
+    <nav class="p-6 flex justify-between items-center max-w-7xl mx-auto">
+        <div class="flex items-center space-x-2">
+            <div class="w-10 h-10 mfc-bg-gradient rounded-lg flex items-center justify-center">
+                <i class="fab fa-firefox-browser text-2xl text-white"></i>
+            </div>
+            <span class="text-xl font-bold tracking-tight">MFC <span class="text-slate-500 font-light">Events</span></span>
+        </div>
+        <div class="space-x-6 text-sm font-medium">
+            <a href="#" class="hover:text-orange-500 transition">Dashboard</a>
+            <a href="#" class="bg-white/10 px-4 py-2 rounded-full hover:bg-white/20 transition">Contact Support</a>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-6 py-12">
+        <div class="mb-12">
+            <div class="flex justify-between mb-2">
+                <span id="step-label" class="text-xs font-bold uppercase tracking-widest mfc-orange">Step 1: Personal Details</span>
+                <span id="step-percent" class="text-xs font-bold text-slate-500">50% Complete</span>
+            </div>
+            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                <div id="progress-bar" class="mfc-bg-gradient h-full transition-all duration-500" style="width: 50%"></div>
+            </div>
+        </div>
+
+        <div class="glass rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
+            <form id="registrationForm" class="space-y-8">
+                <div id="step-1-content" class="space-y-6">
+                    <h2 class="text-3xl font-bold">Join the Fox Den 🦊</h2>
+                    <p class="text-slate-400">Fill in your university credentials to register for the upcoming tech symposium.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-sm font-semibold">Registration Number</label>
+                            <input type="text" id="regNo" placeholder="e.g. 24BCE0001" 
+                                   class="w-full bg-white/5 border border-white/10 rounded-xl p-3 focus:border-orange-500 outline-none transition">
+                            <p id="regError" class="text-xs text-red-400 hidden italic">Invalid format (e.g. 24BCE1234)</p>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-semibold">Email Address</label>
+                            <input type="email" id="email" placeholder="student@vit.ac.in" 
+                                   class="w-full bg-white/5 border border-white/10 rounded-xl p-3 focus:border-orange-500 outline-none transition">
+                        </div>
+                    </div>
+
+                    <button type="button" onclick="handleNext()" class="w-full py-4 mfc-bg-gradient rounded-xl font-bold text-white hover:opacity-90 transition transform hover:scale-[1.01]">
+                        Continue to Event Selection
+                    </button>
+                </div>
+
+                <div id="success-message" class="hidden text-center py-10 space-y-4">
+                    <div class="w-20 h-20 bg-green-500/20 text-green-500 rounded-full flex items-center justify-center mx-auto text-4xl">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold">Registration Received!</h2>
+                    <p class="text-slate-400">Check your dashboard for your digital event pass.</p>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        // Real-time Validation Logic
+        const regInput = document.getElementById('regNo');
+        const regPattern = /^[0-9]{2}[A-Z]{3}[0-9]{4}$/i;
+
+        regInput.addEventListener('input', (e) => {
+            const isValid = regPattern.test(e.target.value);
+            e.target.style.borderColor = isValid ? '#22c55e' : '#ef4444';
+            document.getElementById('regError').classList.toggle('hidden', isValid);
+        });
+
+        function handleNext() {
+            const regNo = document.getElementById('regNo').value;
+            const email = document.getElementById('email').value;
+
+            if(regPattern.test(regNo) && email.includes('@')) {
+                // Update Progress UI
+                document.getElementById('progress-bar').style.width = '100%';
+                document.getElementById('step-percent').innerText = '100% Complete';
+                
+                // Show Success
+                document.getElementById('step-1-content').classList.add('hidden');
+                document.getElementById('success-message').classList.remove('hidden');
+            } else {
+                alert('Please correct the errors before proceeding.');
+            }
+        }
+    </script>
+</body>
+</html>
